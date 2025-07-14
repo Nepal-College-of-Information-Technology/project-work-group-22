@@ -81,4 +81,64 @@ export async function setAvailabilitySlots(formData) {
     console.error("Failed to set availability slots:", error);
     throw new Error("Failed to set availability: " + error.message);
   }
+
+  
 }
+/**
+ * Add notes to an appointment
+ */
+export async function addAppointmentNotes(formData) {
+    const { userId } = await auth();
+  
+    if (!userId) {
+      throw new Error("Unauthorized");
+    }
+  
+    try {
+      const doctor = await db.user.findUnique({
+        where: {
+          clerkUserId: userId,
+          role: "DOCTOR",
+        },
+      });
+  
+      if (!doctor) {
+        throw new Error("Doctor not found");
+      }
+  
+      const appointmentId = formData.get("appointmentId");
+      const notes = formData.get("notes");
+  
+      if (!appointmentId || !notes) {
+        throw new Error("Appointment ID and notes are required");
+      }
+  
+      // Verify the appointment belongs to this doctor
+      const appointment = await db.appointment.findUnique({
+        where: {
+          id: appointmentId,
+          doctorId: doctor.id,
+        },
+      });
+  
+      if (!appointment) {
+        throw new Error("Appointment not found");
+      }
+  
+      // Update the appointment notes
+      const updatedAppointment = await db.appointment.update({
+        where: {
+          id: appointmentId,
+        },
+        data: {
+          notes,
+        },
+      });
+  
+      revalidatePath("/doctor");
+      return { success: true, appointment: updatedAppointment };
+    } catch (error) {
+      console.error("Failed to add appointment notes:", error);
+      throw new Error("Failed to update notes: " + error.message);
+    }
+  }
