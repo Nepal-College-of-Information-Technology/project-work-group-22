@@ -64,3 +64,38 @@ export async function requestPayout(formData) {
     throw new Error("Failed to request payout: " + error.message);
   }
 }
+
+export async function getDoctorPayouts() {
+    const { userId } = await auth();
+  
+    if (!userId) {
+      throw new Error("Unauthorized");
+    }
+  
+    try {
+      const doctor = await db.user.findUnique({
+        where: {
+          clerkUserId: userId,
+          role: "DOCTOR",
+        },
+      });
+  
+      if (!doctor) {
+        throw new Error("Doctor not found");
+      }
+  
+      const payouts = await db.payout.findMany({
+        where: {
+          doctorId: doctor.id,
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+      });
+  
+      return { payouts };
+    } catch (error) {
+      throw new Error("Failed to fetch payouts: " + error.message);
+    }
+  }
+}
