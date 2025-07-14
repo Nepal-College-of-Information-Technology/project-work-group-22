@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    ports:
+      - "3005:3000"
+    env_file:
+      - .env
+    depends_on:
+      - db
+    restart: always
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: medimeet
+      POSTGRES_USER: group22
+      POSTGRES_PASSWORD: npg_wK0igDWpCdS4
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata:
