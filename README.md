@@ -309,7 +309,7 @@ medic-platform/
 
 We extend our gratitude to:
 
-- **Course Instructor**: For guidance on cloud application development
+- **Course Instructor**: Rishi K. Marseni for guidance on cloud application development
 - **NCIT Faculty**: For technical support and project mentorship
 - **Clerk Team**: For excellent authentication service documentation
 - **Vonage Developers**: For comprehensive video API support
