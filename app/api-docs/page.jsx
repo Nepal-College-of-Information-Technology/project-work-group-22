@@ -6,9 +6,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ExternalLink, FileText, Code, Heart, ChevronDown, ChevronUp, Maximize2, Minimize2 } from "lucide-react";
-import dynamic from 'next/dynamic';
+import dynamicImport from 'next/dynamic';
 
-const SwaggerUI = dynamic(() => import('swagger-ui-react'), { ssr: false });
+// Disable static generation for this page
+export const dynamic = 'force-dynamic';
+
+const SwaggerUI = dynamicImport(() => import('swagger-ui-react'), { ssr: false });
 
 // Import CSS after component loads
 if (typeof window !== 'undefined') {

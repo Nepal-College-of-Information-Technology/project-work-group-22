@@ -1,37 +1,42 @@
-# Use official Node.js image as the base
-FROM node:20-alpine AS builder
+# Simple single-stage Dockerfile
+FROM node:20-alpine
 
-# Set working directory
 WORKDIR /app
+
+# Accept build arguments
+ARG NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+ARG CLERK_SECRET_KEY
+ARG DATABASE_URL
+ARG NEXT_PUBLIC_VONAGE_APPLICATION_ID
+ARG VONAGE_PRIVATE_KEY
+
+# Set environment variables from build args
+ENV NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=$NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+ENV CLERK_SECRET_KEY=$CLERK_SECRET_KEY
+ENV DATABASE_URL=$DATABASE_URL
+ENV NEXT_PUBLIC_VONAGE_APPLICATION_ID=$NEXT_PUBLIC_VONAGE_APPLICATION_ID
+ENV VONAGE_PRIVATE_KEY=$VONAGE_PRIVATE_KEY
+
+# Copy package files first
+COPY package.json package-lock.json* ./
+
+# Copy prisma schema before npm install (needed for postinstall script)
+COPY prisma ./prisma
 
 # Install dependencies
-COPY package.json package-lock.json* ./
-RUN npm install --production=false
+RUN npm ci --legacy-peer-deps
 
-# Copy all files
+# Copy all source code
 COPY . .
 
-# Build the Next.js app
+# Build the application with environment variables
 RUN npm run build
 
-# Production image
-FROM node:20-alpine AS runner
-WORKDIR /app
-
-# Install only production dependencies
-COPY package.json package-lock.json* ./
-RUN npm install --production
-
-# Copy built app and other necessary files
-COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/package.json ./package.json
-COPY --from=builder /app/next.config.mjs ./next.config.mjs
-COPY --from=builder /app/.env ./.env
-COPY --from=builder /app/prisma ./prisma
+# Set to production for runtime
+ENV NODE_ENV=production
 
 # Expose port
 EXPOSE 3000
 
-# Start the Next.js app
+# Start the application
 CMD ["npm", "start"]

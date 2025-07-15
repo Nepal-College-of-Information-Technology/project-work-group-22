@@ -4,6 +4,9 @@ import { useEffect } from 'react';
 import SwaggerUI from 'swagger-ui-react';
 import 'swagger-ui-react/swagger-ui.css';
 
+// Disable static generation for this component
+export const dynamic = 'force-dynamic';
+
 const SwaggerUIWrapper = ({ spec }) => {
   useEffect(() => {
     // Suppress React strict mode warnings for swagger-ui-react
