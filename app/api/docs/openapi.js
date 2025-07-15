@@ -117,7 +117,7 @@ export const openApiSpec = {
   },
   components: {
     schemas: {
-      Appointment: {
+      Appointment: {    
         type: "object",
         properties: {
           id: { type: "string" },
