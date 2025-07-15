@@ -93,6 +93,26 @@ export const openApiSpec = {
           204: { description: "Appointment deleted" }
         }
       }
+    },
+    "/api/hello": {
+      get: {
+        summary: "Simple hello endpoint",
+        responses: {
+          200: {
+            description: "Returns a hello message",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    message: { type: "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   components: {
