@@ -77,3 +77,27 @@ export async function setUserRole(formData) {
     throw new Error(`Failed to update user profile: ${error.message}`);
   }
 }
+
+/**
+ * Gets the current user's complete profile information
+ */
+export async function getCurrentUser() {
+  const { userId } = await auth();
+
+  if (!userId) {
+    return null;
+  }
+
+  try {
+    const user = await db.user.findUnique({
+      where: {
+        clerkUserId: userId,
+      },
+    });
+
+    return user;
+  } catch (error) {
+    console.error("Failed to get user information:", error);
+    return null;
+  }
+}
