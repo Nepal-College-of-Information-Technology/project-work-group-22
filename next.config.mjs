@@ -3,6 +3,14 @@ const nextConfig = {
   experimental: {
     serverComponentsHmrCache: false, // defaults to true
   },
+  // Production build optimizations
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
+  // Reduce bundle size
+  transpilePackages: ['swagger-ui-react'],
+  // Output configuration for better performance
+  output: 'standalone',
   images: {
     remotePatterns: [
       {
