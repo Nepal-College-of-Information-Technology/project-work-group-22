@@ -1,7 +1,23 @@
-# Simple single-stage Dockerfile
-FROM node:20-alpine
+# Multi-stage Dockerfile optimized for standalone output
+FROM node:20-alpine AS base
 
+# Install dependencies only when needed
+FROM base AS deps
+RUN apk add --no-cache libc6-compat
 WORKDIR /app
+
+# Copy package files
+COPY package.json package-lock.json* ./
+COPY prisma ./prisma
+
+# Install dependencies
+RUN npm ci --legacy-peer-deps
+
+# Rebuild the source code only when needed
+FROM base AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
 
 # Accept build arguments
 ARG NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
@@ -17,26 +33,29 @@ ENV DATABASE_URL=$DATABASE_URL
 ENV NEXT_PUBLIC_VONAGE_APPLICATION_ID=$NEXT_PUBLIC_VONAGE_APPLICATION_ID
 ENV VONAGE_PRIVATE_KEY=$VONAGE_PRIVATE_KEY
 
-# Copy package files first
-COPY package.json package-lock.json* ./
-
-# Copy prisma schema before npm install (needed for postinstall script)
-COPY prisma ./prisma
-
-# Install dependencies
-RUN npm ci --legacy-peer-deps
-
-# Copy all source code
-COPY . .
-
-# Build the application with environment variables
+# Build the application
 RUN npm run build
 
-# Set to production for runtime
+# Production image, copy all the files and run next
+FROM base AS runner
+WORKDIR /app
+
 ENV NODE_ENV=production
 
-# Expose port
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+# Copy the standalone output
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/public ./public
+
+USER nextjs
+
 EXPOSE 3000
 
-# Start the application
-CMD ["npm", "start"]
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
+
+# Start the standalone server
+CMD ["node", "server.js"]
