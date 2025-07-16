@@ -91,14 +91,13 @@ The Medic platform follows a modern cloud-native architecture pattern:
 - **Database**: Cloud-hosted PostgreSQL with Prisma ORM for data management
 - **Authentication**: Clerk for secure user authentication and session management
 - **Video Service**: Vonage Video API for real-time video consultations
-- **Deployment**: Vercel platform for continuous deployment and global CDN
+]
 
 ---
 
 ## 🔧 Technologies & Tools Used
 
 ### ☁️ Cloud Platform
-- **Vercel** - Serverless deployment platform with global CDN
 - **Neon** - Serverless PostgreSQL database-as-a-service
 - **Clerk** - Authentication and user management service
 
@@ -120,7 +119,6 @@ The Medic platform follows a modern cloud-native architecture pattern:
 - **Zod** - Schema validation library
 
 ### 📦 DevOps & Deployment
-- **Vercel** - Continuous deployment and hosting
 - **GitHub Actions** - CI/CD pipeline automation
 - **Prisma Migrate** - Database schema migrations
 - **ESLint** - Code quality and linting
@@ -324,7 +322,6 @@ We extend our gratitude to:
 2. [Clerk Authentication](https://clerk.com/docs) - Authentication service guide
 3. [Vonage Video API](https://developer.vonage.com/video/overview) - Video calling implementation
 4. [Prisma ORM](https://www.prisma.io/docs) - Database ORM documentation
-5. [Vercel Platform](https://vercel.com/docs) - Deployment platform guide
 6. [Tailwind CSS](https://tailwindcss.com/docs) - Utility-first CSS framework
 7. [PostgreSQL Documentation](https://www.postgresql.org/docs/) - Database management
 8. [Cloud Computing Best Practices](https://aws.amazon.com/architecture/well-architected/) - AWS Well-Architected Framework
