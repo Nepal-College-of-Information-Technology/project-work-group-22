@@ -52,8 +52,8 @@ COPY --from=deps /app/node_modules ./node_modules
 # Copy application files
 COPY . .
 
-# Build the application
-RUN npm run build
+# Build the application with optimizations
+RUN npm run build --verbose
 
 # Production image, copy all the files and run next
 FROM base AS runner
