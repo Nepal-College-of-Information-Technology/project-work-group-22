@@ -14,7 +14,7 @@
 |------|------------|------|
 | Subash Singh Dhami | 221748 | Backend Developer |
 | Simon Khadka| 221641 | Frontend Developer |
-| Anish K Neupane | Roll Number | Frontend Developer & Database|
+| Anish K Neupane | 221608 | Frontend Developer & Database|
 
 ---
 
