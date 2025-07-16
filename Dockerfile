@@ -11,8 +11,12 @@ ENV NEXT_TELEMETRY_DISABLED=1
 COPY package.json package-lock.json* ./
 COPY prisma ./prisma
 
-# Install dependencies and clean cache in one step
-RUN npm install --production=false --legacy-peer-deps && \
+# Install only production dependencies first, then add dev deps for build
+RUN npm install --omit=dev --legacy-peer-deps && \
+    npm cache clean --force
+
+# Install dev dependencies only for build
+RUN npm install --legacy-peer-deps && \
     npm cache clean --force
 
 # Generate Prisma client
@@ -21,9 +25,10 @@ RUN npx prisma generate
 # Copy source
 COPY . .
 
-# Build app and clean up
+# Build app and clean up immediately
 RUN npm run build && \
-    npm prune --production && \
+    rm -rf node_modules && \
+    npm install --omit=dev --legacy-peer-deps && \
     npm cache clean --force
 
 # Expose port
