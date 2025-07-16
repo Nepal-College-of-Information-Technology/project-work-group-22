@@ -13,9 +13,8 @@
 | Name | Roll Number | Role |
 |------|------------|------|
 | Subash Singh Dhami | 221748 | Backend Developer |
-| Team Member 2 | Roll Number | Frontend Developer |
-| Team Member 3 | Roll Number | Frontend Developer |
-| Team Member 4 | Roll Number |    |
+| Simon Khadka| 221641 | Frontend Developer |
+| Anish K Neupane | Roll Number | Frontend Developer & Database|
 
 ---
 
