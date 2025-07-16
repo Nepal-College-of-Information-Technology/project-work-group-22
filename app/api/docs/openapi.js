@@ -1,13 +1,13 @@
-// Comprehensive OpenAPI spec for MediMeet Telemedicine Platform
+// Comprehensive OpenAPI spec for Medic Telemedicine Platform
 export const openApiSpec = {
   openapi: "3.0.0",
   info: {
-    title: "MediMeet Telemedicine Platform API",
+    title: "Medic Telemedicine Platform API",
     version: "1.0.0",
-    description: "Complete API documentation for MediMeet - a comprehensive telemedicine platform with doctor verification, appointment booking, video consultations, credit system, and admin management.",
+    description: "Complete API documentation for Medic - a comprehensive telemedicine platform with doctor verification, appointment booking, video consultations, credit system, and admin management.",
     contact: {
-      name: "MediMeet Support",
-      email: "support@medimeet.com"
+      name: "Medic Support",
+      email: "anish.221608@ncit.edu.np"
     },
     license: {
       name: "MIT",
