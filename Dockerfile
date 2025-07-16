@@ -12,7 +12,7 @@ COPY package.json package-lock.json* ./
 COPY prisma ./prisma
 
 # Install dependencies and clean cache in one step
-RUN npm install --production=false && \
+RUN npm install --production=false --legacy-peer-deps && \
     npm cache clean --force
 
 # Generate Prisma client
