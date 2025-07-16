@@ -12,10 +12,16 @@
 ### Group Number: 22
 | Name | Roll Number | Role |
 |------|------------|------|
+<<<<<<< HEAD
 | Subash Singh Dhami | 221748 | Backend Developer & DevOps |
 | Simon | 221641 | Frontend Developer |
 | Anish | 221608 | Frontend Developer & DBA |
 | Abiral| 221702 |    |
+=======
+| Subash Singh Dhami | 221748 | Backend Developer |
+| Simon Khadka| 221641 | Frontend Developer |
+| Anish K Neupane | 221608 | Frontend Developer & Database|
+>>>>>>> 072c5efe59f4dbd39e31694e5378932aa8793911
 
 ---
 
