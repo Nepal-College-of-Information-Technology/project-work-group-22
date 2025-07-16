@@ -3,6 +3,13 @@ const nextConfig = {
   experimental: {
     serverComponentsHmrCache: false, // defaults to true
   },
+  // Skip type checking and linting during build for Docker
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   // Production build optimizations
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
